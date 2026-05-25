@@ -59,6 +59,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
         }
         .fade-in.appear {
             opacity: 1;
@@ -233,6 +234,19 @@
                     <p class="text-sm text-gray-500 italic">Join us for a grand evening reception to conclude the celebrations.</p>
                 </div>
             </div>
+
+            <!-- Travel Note -->
+            <div class="mt-16 text-center text-gray-600 bg-sage-50 rounded-lg p-6 border border-sage-100 max-w-3xl mx-auto shadow-sm">
+                <p class="flex items-center justify-center font-medium text-sage-800 mb-3 text-lg">
+                    <i data-lucide="plane" class="w-5 h-5 mr-2 text-sage-500"></i>
+                    Travel Note
+                </p>
+                <p class="text-sm leading-relaxed">
+                    The nearest airport to <strong>Guruvayoor</strong> is <strong>Kochi (COK)</strong>.<br>
+                    The nearest airport to <strong>Trivandrum</strong> is <strong>Trivandrum International Airport (TRV)</strong>.
+                </p>
+            </div>
+            
         </div>
     </section>
 
@@ -274,7 +288,7 @@
             <form action="https://api.web3forms.com/submit" method="POST" id="rsvp-form" class="bg-white text-gray-800 p-8 md:p-12 rounded-lg shadow-2xl">
                 
                 <!-- Replace with your Access Key -->
-                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                <input type="hidden" name="access_key" value="c5c1ae22-0314-4cb8-8e1b-f8c174d6d70d">
                 <input type="hidden" name="subject" value="New Wedding RSVP">
                 <!-- Redirect after submission (optional, can remove for inline message) -->
                 <input type="hidden" name="redirect" value="https://web3forms.com/success">
@@ -453,13 +467,14 @@
             rootMargin: "0px 0px -50px 0px"
         };
 
-        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+        const appearOnScroll = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
-                if (!entry.isIntersecting) {
-                    return;
-                } else {
+                if (entry.isIntersecting) {
+                    // Add the class when the element scrolls into view
                     entry.target.classList.add('appear');
-                    appearOnScroll.unobserve(entry.target);
+                } else {
+                    // Remove the class when the element leaves the viewport
+                    entry.target.classList.remove('appear');
                 }
             });
         }, appearOptions);
